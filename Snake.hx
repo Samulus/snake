@@ -26,6 +26,7 @@ class Snake {
 
         /* Spawn Random Apple */
         Apple.spawn(World.getAvailableRandomSpawn());
+        World.markOccupied(Apple.getPosition(), new Apple());
 
         /* Start Input Loop */
         Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, input);
@@ -53,6 +54,17 @@ class Snake {
     static public function updateAndRender(): Void {
         player.update();
         player.render();
+
+        /* Check if Apple collision */
+        var apple = Apple.getPosition();
+        var head = player.getHead();
+        if (apple.x == head.x && apple.y == head.y) {
+            player.consumeApple();
+            World.markAvailable(Apple.getPosition());
+            Apple.spawn(World.getAvailableRandomSpawn());
+            World.markOccupied(Apple.getPosition(), new Apple());
+        }
+
         Apple.render();
     }
 }
