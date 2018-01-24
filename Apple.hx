@@ -13,14 +13,19 @@ import flash.display.Stage;
 import flash.display.Shape;
 
 class Apple implements Entity {
-
     private static var position: Point;
     private static var shape: Shape;
 
+    public function new() {
+        /* Dummy Function */
+    }
+
     public static function spawn(point: Point) {
         position = Point.clone(point);
-        shape = new Shape();
-        Lib.current.stage.addChild(shape);
+        if (shape == null) {
+            shape = new Shape();
+            Lib.current.stage.addChild(shape);
+        }
     }
 
     public static function render() {
@@ -30,4 +35,7 @@ class Apple implements Entity {
         shape.y = position.y;
     }
 
+    public static function getPosition(): Point {
+        return position;
+    }
 }
