@@ -52,24 +52,24 @@ class Player {
 
         if (desired == Direction.North && direction != Direction.South) {
             this.velocity.x = 0;
-            this.velocity.y = -1;
+            this.velocity.y = -1 * this.h;
             this.direction = desired;
         }
 
         else if (desired == Direction.South && direction != Direction.North) {
             this.velocity.x = 0;
-            this.velocity.y = 1;
+            this.velocity.y = 1 * this.h;
             this.direction = desired;
         }
 
         else if (desired == Direction.East && direction != Direction.West) {
-            this.velocity.x = -1;
+            this.velocity.x = -1 * this.w;
             this.velocity.y = 0;
             this.direction = desired;
         }
 
         else if (desired == Direction.West && direction != Direction.East) {
-            this.velocity.x = 1;
+            this.velocity.x = 1 * this.w;
             this.velocity.y = 0;
             this.direction = desired;
         }
