@@ -2,10 +2,21 @@
     Entity.hx
     Author: Samuel Vargas
 
-    Dummy Interface used to tie Apple.hx and Player.hx together
+    IDs are guaranteed to be positive
 */
+
 package ;
 
-interface Entity {
+class Entity {
+    private static var ATOMIC_ID = 1;
+    private var id = 0;
 
+    private function new() {
+        id = ATOMIC_ID;
+        ATOMIC_ID++;
+    }
+
+    public function getID(): UInt {
+        return this.id;
+    }
 }

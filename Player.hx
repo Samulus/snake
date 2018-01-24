@@ -8,7 +8,7 @@ import flash.Lib;
 import flash.display.Stage;
 import flash.display.Shape;
 
-class Player implements Entity {
+class Player extends Entity {
 
     private var positions: Array<Point>;
     private var lastTail: Point;
@@ -24,6 +24,8 @@ class Player implements Entity {
     private var ateApple: Bool;
 
     public function new(x: Int, y: Int, w: Int, h: Int, stage: Stage) {
+        super();
+
         // Setup positioning information
         this.positions = new Array<Point>();
         this.positions.push(new Point(x, y));
@@ -105,6 +107,7 @@ class Player implements Entity {
         /* Check if the snake is dead */
 
         // 1) Snake has collided with itself (ignore the head)
+        /*
         for (i in 1 ... this.positions.length) {
             if (World.isSnakeHere(this.positions[i], this)) {
                 trace("SNAKE HAS DIED");
@@ -124,8 +127,9 @@ class Player implements Entity {
         }
 
         // Record in the map where the head is, mark lastTail as available
-        World.markAvailable(Point.clone(lastTail));
-        World.markOccupied(Point.clone(this.positions[0]), this);
+        //World.markAvailable(Point.clone(lastTail));
+        //World.markOccupied(Point.clone(this.positions[0]), this);
+        */
 
     }
 
