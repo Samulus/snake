@@ -31,11 +31,6 @@ class World {
             }
             y += Settings.CELL_HEIGHT;
         }
-
-        for (y in 0 ... Settings.SCREEN_HEIGHT) {
-            for (x in 0 ... Settings.SCREEN_WIDTH) {
-            }
-        }
     }
 
     public static function reset() {
