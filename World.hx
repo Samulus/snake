@@ -45,7 +45,14 @@ class World {
     }
 
     public static function getAvailableRandomSpawn() {
-        for (spot in World.cells.keys()) {
+        // Lambda.array(World.cells.keys()) doesn't work for some reason
+        var shuffledKeys = new Array<Point>();
+        for (p in World.cells.keys()) {
+            shuffledKeys.push(p);
+        }
+
+        Shuffle.fisherYates(shuffledKeys);
+        for (spot in shuffledKeys) {
             if (World.cells[spot] == null) {
                 return spot;
             }
