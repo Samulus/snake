@@ -21,4 +21,8 @@ class Point {
     public function equals(lhs: Point, rhs: Point): Bool {
         return (lhs.x == rhs.x && lhs.y == rhs.y);
     }
+
+    public function toString(): String {
+        return "{x = " + this.x + ", y = " + this.y + "}";
+    }
 }
