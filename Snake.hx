@@ -27,11 +27,15 @@ class Snake {
         /* Spawn Random Apple */
         Apple.spawn(World.getAvailableRandomSpawn());
 
-        /* Start Loop */
-        Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, loop);
+        /* Start Input Loop */
+        Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, input);
+
+        /* Start Update + Render Loop */
+        var timer = new haxe.Timer(Settings.MS_PER_UPDATE);
+        timer.run = updateAndRender;
     }
 
-    static public function loop(event: Event):Void {
+    static public function input(event: Event):Void {
 
         /* Record requested player movement direction */
         if (Input.isPressed(Keyboard.S)) {
@@ -44,7 +48,9 @@ class Snake {
             player.move(Direction.West);
         }
 
-        /* Actually move */
+    }
+
+    static public function updateAndRender(): Void {
         player.update();
         player.render();
         Apple.render();
