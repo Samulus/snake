@@ -8,10 +8,9 @@ import flash.Lib;
 import flash.display.Stage;
 import flash.display.Shape;
 
-class Player {
+class Player implements Entity {
 
     private var positions: Array<Point>;
-    private var collisionMap: Map<Point, Bool>; // I would use a Set<Point> if Haxe had it
     private var lastTail: Point;
     private var blocks: Array<Shape>;
     private var velocity: Point;
@@ -19,13 +18,16 @@ class Player {
     private var h: Int;
     private var direction: Direction;
     private var stage: Stage;
+
+    // States
     private var dead: Bool;
+    private var ateApple: Bool;
 
     public function new(x: Int, y: Int, w: Int, h: Int, stage: Stage) {
         // Setup positioning information
         this.positions = new Array<Point>();
-        this.positions.insert(0, new Point(x, y));
-        this.collisionMap = new Map<Point, Bool>();
+        this.positions.push(new Point(x, y));
+
         this.lastTail = new Point(x, y);
         this.w = w;
         this.h = h;
@@ -33,15 +35,16 @@ class Player {
 
         // Setup actual blocks to be rendered
         this.blocks = new Array<Shape>();
-        this.blocks.insert(0, new Shape());
+        this.blocks.push(new Shape());
         this.stage.addChild(this.blocks[0]);
 
         // Set Direction + Velocity
         this.direction = Direction.South;
-        this.velocity = new Point(0, 1);
+        this.velocity = new Point(0, this.h);
 
-        // Set life
+        // Set states
         this.dead = false;
+        this.ateApple = false;
     }
 
     public function move(desired: Direction) {
@@ -88,24 +91,42 @@ class Player {
         lastTail = Point.clone(this.positions[this.positions.length - 1]);
 
         // Update the body of the snake.
-        for (i in this.positions.length - 1 ... 0) {
+        var i=this.positions.length - 1;
+        while (i > 0) {
             this.positions[i].x = this.positions[i - 1].x;
             this.positions[i].y = this.positions[i - 1].y;
+            --i;
         }
 
         // Update the head of the snake.
         this.positions[0].x += this.velocity.x;
         this.positions[0].y += this.velocity.y;
 
-        // Check if the snake is dead
-        checkIfSnakeDead();
-    }
+        /* Check if the snake is dead */
 
-    private function checkIfSnakeDead() {
-        /* TODO:
-            1) Snake has collided with themselves (use collisionMap)
-            2) Snake has hit the wall.
-        */
+        // 1) Snake has collided with itself (ignore the head)
+        for (i in 1 ... this.positions.length) {
+            if (World.isSnakeHere(this.positions[i], this)) {
+                trace("SNAKE HAS DIED");
+                dead = true;
+                return;
+            }
+        }
+
+        // 2) TODO: Snake is out of bounds.
+
+        // Grow snake if needed
+        if (this.ateApple) {
+            this.positions.push(Point.clone(lastTail));
+            this.blocks.push(new Shape());
+            this.stage.addChild(this.blocks[this.blocks.length - 1]);
+            this.ateApple = false;
+        }
+
+        // Record in the map where the head is, mark lastTail as available
+        World.markAvailable(Point.clone(lastTail));
+        World.markOccupied(Point.clone(this.positions[0]), this);
+
     }
 
     public function render() {
@@ -121,7 +142,12 @@ class Player {
         }
     }
 
-    public function growSnake(p: Point) {
+    public function consumeApple() {
+        this.ateApple = true;
+    }
+
+    public function getPositions() {
+        return this.positions;
     }
 
     public function getHead(): Point {
