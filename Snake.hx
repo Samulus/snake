@@ -10,23 +10,26 @@ import flash.events.Event;
 import flash.ui.Keyboard;
 
 class Snake {
+    static private var apple: Apple;
     static private var player: Player;
+    static private var world: World;
 
     static public function main() {
 
         /* Setup Systems */
         Input.init(Lib.current.stage);
-        World.init();
+        world = new WorldArray(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
 
         /* Setup Player */
-        player = new Player(64, 64, Settings.CELL_WIDTH, Settings.CELL_HEIGHT, Lib.current.stage);
+        player = new Player(16, 16, Settings.CELL_WIDTH, Settings.CELL_HEIGHT, Lib.current.stage);
         for (pos in player.getPositions()) {
-            World.markOccupied(pos, player);
+            world.add(pos, player.getID()); // Add the player + all their body segments to the worldmap
         }
 
-        /* Spawn Random Apple */
-        Apple.spawn(World.getAvailableRandomSpawn());
-        World.markOccupied(Apple.getPosition(), new Apple());
+        /* Spawn Apple */
+        apple = new Apple(world.getAvailableRandomSpawn());
+        world.add(apple.getPosition(), apple.getID());
+
 
         /* Start Input Loop */
         Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, input);
@@ -52,19 +55,19 @@ class Snake {
     }
 
     static public function updateAndRender(): Void {
+        // Update and render the player
         player.update();
         player.render();
 
-        /* Check if Apple collision */
-        var apple = Apple.getPosition();
-        var head = player.getHead();
-        if (apple.x == head.x && apple.y == head.y) {
+
+        // Check if the player has collided with an Apple
+        if (world.itemAt(player.getHead()) == apple.getID()) {
             player.consumeApple();
-            World.markAvailable(Apple.getPosition());
-            Apple.spawn(World.getAvailableRandomSpawn());
-            World.markOccupied(Apple.getPosition(), new Apple());
+            world.del(apple.getPosition());
+            apple.setPosition(world.getAvailableRandomSpawn());
+            world.add(apple.getPosition(), apple.getID());
         }
 
-        Apple.render();
+        apple.render();
     }
 }
