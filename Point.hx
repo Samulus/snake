@@ -13,4 +13,12 @@ class Point {
         this.x = x;
         this.y = y;
     }
+
+    public static function clone(p: Point) {
+        return new Point(p.x, p.y);
+    }
+
+    public function equals(lhs: Point, rhs: Point): Bool {
+        return (lhs.x == rhs.x && lhs.y == rhs.y);
+    }
 }
