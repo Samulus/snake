@@ -6,6 +6,8 @@
 package ;
 
 class Settings {
-    public static var SNAKE_HEIGHT = 16;
-    public static var SNAKE_WIDTH = 16;
+    public static var CELL_HEIGHT = 8;
+    public static var CELL_WIDTH = 8;
+    public static var SCREEN_WIDTH = 400;
+    public static var SCREEN_HEIGHT = 300;
 }
