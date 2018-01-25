@@ -48,8 +48,7 @@ class Snake extends Entity {
         this.stage.addChild(this.blocks[0]);
 
         // Set Direction + Velocity
-        this.direction = Direction.South;
-        this.velocity = new Point(0, this.h);
+        setRandomDirection();
 
         // Setup Screen Info
         this.screenWidth = screenWidth;
@@ -58,6 +57,31 @@ class Snake extends Entity {
         // Set states
         this.dead = false;
         this.ateApple = false;
+    }
+
+    private function setRandomDirection() {
+        // Check which horizontal distance is the greatest
+        var westDelta = this.positions[0].x;
+        var eastDelta = this.screenWidth - this.positions[0].x;
+        var useWest = westDelta > eastDelta;
+        var horizontalGap = (useWest) ? westDelta : eastDelta;
+
+        // Check which vertical distance is the greatest
+        var northDelta = this.positions[0].y;
+        var southDelta = this.screenHeight - this.positions[0].y;
+        var useNorth = northDelta > southDelta;
+        var verticalGap = (useNorth) ? northDelta : southDelta;
+        this.velocity = new Point(0, 0);
+
+        // Set the Direction + Velocity as needed
+        if (horizontalGap >= verticalGap) {
+            this.direction = (useWest) ? Direction.West : Direction.East;
+            this.velocity.x = (useWest) ? -1 * this.w : this.w;
+        } else {
+            this.direction = (useNorth) ? Direction.North : Direction.South;
+            this.velocity.y = (useNorth) ? -1 * this.h : this.h;
+        }
+
     }
 
     public function move(desired: Direction) {
