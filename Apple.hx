@@ -21,6 +21,7 @@ class Apple extends Entity {
         shape = new Shape();
         this.position = point;
         Lib.current.stage.addChild(shape);
+        this.id = -1;
     }
 
     public function getPosition(): Point {
