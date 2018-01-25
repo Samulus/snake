@@ -1,5 +1,5 @@
 /*
-    Input.hx
+    GlobalKeyboardInput.hx
     Author: Samuel Vargas
 */
 

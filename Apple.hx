@@ -1,15 +1,10 @@
 /*
     Apple.hx
     Author: Samuel Vargas
-
-    Apple spawner accepts an array of Player objects and users their
-    positions to identify a random location on the map that is unoccupied by
-    any snake.
 */
 
 package ;
 import flash.Lib;
-import flash.display.Stage;
 import flash.display.Shape;
 
 class Apple extends Entity {

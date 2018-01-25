@@ -16,7 +16,6 @@ class Player {
         this.name = name;
         this.color = color;
         this.inputDevice = inputDevice;
-        // Due to the Settings.hx configuration every snake has to be spawned at 
     }
 
     public function attachSnake(snake: Snake) {

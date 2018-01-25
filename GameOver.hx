@@ -27,7 +27,7 @@ class GameOver {
         }
 
         // Convert the keys to a sorted desecending array
-        // Lambda.array(scoreTable.keys()); doesn't work...
+        // Lambda.array(scoreTable.keys()); doesn't compile...
         var tmp = [];
         for (key in scoreTable.keys()) {
             tmp.push(key);
