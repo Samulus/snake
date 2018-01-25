@@ -11,6 +11,7 @@ class Player {
     private var color: UInt;
     private var inputDevice: InputDevice;
     private var snake: Snake;
+    private var score: UInt;
 
     public function new(name: String, color: UInt, inputDevice: InputDevice) {
         this.name = name;
@@ -18,36 +19,26 @@ class Player {
         this.inputDevice = inputDevice;
     }
 
+    public function reset() {
+        this.score = 0;
+    }
+
     public function attachSnake(snake: Snake) {
         this.snake = snake;
     }
 
-    public function update(world: World, apple: Apple) {
-        if (snake == null) {
-            trace("Missing Snake!");
-        }
-        snake.update(world, apple);
+    public function getScore() {
+        return this.score;
     }
 
-    public function move(direction: Direction) {
-        if (snake == null) {
-            trace("Missing Snake!");
-        }
-        snake.move(direction);
-    }
-
-    public function render() {
-        if (snake == null) {
-            trace("Missing Snake!");
-        }
-        snake.render();
+    public function incrementScore() {
+        this.score += 1;
     }
 
     public function getSnake(): Snake {
         if (snake == null) {
             trace("Missing Snake!");
         }
-
         return snake;
     }
 

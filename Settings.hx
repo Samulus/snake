@@ -7,14 +7,26 @@ package ;
 import flash.ui.Keyboard;
 
 class Settings {
+    /* Visual */
     public static var CELL_HEIGHT = 16; // Only works for 16?
     public static var CELL_WIDTH = 16;
     public static var SCREEN_WIDTH = 1280;
     public static var SCREEN_HEIGHT = 720;
+
+    /* Gameplay */
     public static var MS_PER_UPDATE = 75;
+    public static var SNAKE_VELOCITIES = [
+        Direction.North => new Point(0, -CELL_HEIGHT),
+        Direction.South => new Point(0, CELL_HEIGHT),
+        Direction.West => new Point(CELL_WIDTH, 0),
+        Direction.East => new Point(-CELL_WIDTH, 0),
+    ];
+
+    /* Timing */
     public static var MS_DELAY_BEFORE_GAME = 1000; // Delay period before starting the game
     public static var MS_DEALY_GAME_OVER = 5000; // How long to display the game over screen
 
+    /* Players */
     public static var Players = [
 
         new Player(

@@ -18,7 +18,7 @@ class GameOver {
 
         // Place everyones scores in a map
         for (p in players) {
-            var key = p.getSnake().getScore();
+            var key = p.getScore();
             if (!scoreTable.exists(key)) {
                 scoreTable[key] = [p.getName()];
             } else {

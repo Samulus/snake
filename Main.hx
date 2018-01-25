@@ -17,12 +17,39 @@ class Main {
         // Setup Global Inputs
         GlobalKeyboardInput.init(Lib.current.stage);
         GlobalMouseInput.init(Lib.current.stage);
+
+        // Setup Static Systems
+        SnakeManager.init(Settings.CELL_WIDTH,
+                          Settings.CELL_HEIGHT,
+                          Settings.SCREEN_WIDTH,
+                          Settings.SCREEN_HEIGHT,
+                          Settings.SNAKE_VELOCITIES);
+
+        // Setup World + Singular Apple
         world = new WorldArray(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
         apple = new Apple(world.getAvailableRandomSpawn());
 
-        // reset && render but don't update or accept input yet
+        // Setup all initial object states + delay before starting main loop
         reset();
         delayBeforeGame();
+    }
+
+    static public function reset(): Void {
+        SnakeManager.reset();
+        world.reset();
+
+        // Spawn Snakes for Players
+        for (player in Settings.Players) {
+            player.reset();
+            var spawn = world.getAvailableRandomSpawn();
+            var snake = SnakeManager.spawnSnake(spawn, player.getColor(), world);
+            player.attachSnake(snake);
+        }
+
+        // Place the apple in a random location
+        apple.setPosition(world.getAvailableRandomSpawn());
+        world.add(apple.getPosition(), apple.getID());
+        render();
     }
 
     static public function delayBeforeGame() {
@@ -42,42 +69,34 @@ class Main {
         render();
     }
 
-    static public function reset(): Void {
-        Snake.Reset();
-
-        world.reset();
-
-        // Spawn Snakes for Players
-        for (player in Settings.Players) {
-            var spawn = world.getAvailableRandomSpawn();
-            var snake = new Snake(spawn.x, spawn.y, Settings.CELL_WIDTH,
-                                                    Settings.CELL_HEIGHT,
-                                                    player.getColor(),
-                                                    Settings.SCREEN_WIDTH,
-                                                    Settings.SCREEN_HEIGHT);
-            player.attachSnake(snake);
-            world.add(spawn, snake.getID());
-        }
-
-        var spawn = world.getAvailableRandomSpawn();
-        world.add(apple.getPosition(), apple.getID());
-        render();
-    }
-
+    // Accept input from all keyboards, mouse, AI units, replay systems etc.
     static public function input(): Void {
         for (player in Settings.Players) {
             var input = player.getInputDevice();
-            input.update(player.getSnake(), apple);
-            player.move(input.getDirection());
+            var snake = player.getSnake();
+            input.update(snake, apple);
+            snake.move(input.getDirection());
         }
     }
 
+    // Process logic for each snake, ignore dead snakes.
     static public function update(): Void {
         for (player in Settings.Players) {
-            player.update(world, apple);
+            var snake = player.getSnake();
+            if (snake.isDead()) {
+                continue;
+            }
+
+            snake.update();
+            SnakeManager.maybeKillSnake(snake, world);
+            if (SnakeManager.maybeEatApple(snake, apple, world)) {
+                player.incrementScore();
+            }
+
+            SnakeManager.updateWorld(snake, world);
         }
 
-        if (Snake.Count() <= 0) {
+        if (SnakeManager.getCount() <= 0) {
             // Print out winners
             gameTimer.stop();
             GameOver.display(Settings.Players);
@@ -94,7 +113,8 @@ class Main {
 
     static public function render(): Void {
         for (player in Settings.Players) {
-            player.render();
+            var snake = player.getSnake();
+            snake.render();
         }
         apple.render();
     }
