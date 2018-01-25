@@ -19,11 +19,16 @@ class Player extends Entity {
     private var direction: Direction;
     private var stage: Stage;
 
+    // Screen Info
+    private var screenWidth: Int;
+    private var screenHeight: Int;
+
     // States
     private var dead: Bool;
     private var ateApple: Bool;
 
-    public function new(x: Int, y: Int, w: Int, h: Int, stage: Stage) {
+    public function new(x: Int, y: Int, w: Int, h: Int,
+                        screenWidth: Int, screenHeight: Int, stage: Stage) {
         super();
 
         // Setup positioning information
@@ -43,6 +48,10 @@ class Player extends Entity {
         // Set Direction + Velocity
         this.direction = Direction.South;
         this.velocity = new Point(0, this.h);
+
+        // Setup Screen Info
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
 
         // Set states
         this.dead = false;
@@ -115,7 +124,13 @@ class Player extends Entity {
             Kill Snake
         */
 
-        // (TODO): Suicide if Snake has gone out of bounds
+        // Suicide if Snake has gone out of bounds
+        var head = this.positions[0];
+        if (head.x < 0 || head.x > screenWidth || head.y < 0 || head.y > screenHeight) {
+            die(world);
+            trace("Out of bounds");
+            return;
+        }
 
         // Suicide if we touch another snake (ourselves included!)
         if (world.itemAt(this.positions[i]) > 0) {

@@ -21,7 +21,11 @@ class Snake {
         world = new WorldArray(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
 
         /* Setup Player */
-        player = new Player(16, 16, Settings.CELL_WIDTH, Settings.CELL_HEIGHT, Lib.current.stage);
+        player = new Player(16, 16, Settings.CELL_WIDTH,
+                                    Settings.CELL_HEIGHT,
+                                    Settings.SCREEN_WIDTH,
+                                    Settings.SCREEN_HEIGHT, Lib.current.stage);
+
         for (pos in player.getPositions()) {
             world.add(pos, player.getID()); // Add the player + all their body segments to the worldmap
         }
