@@ -13,7 +13,7 @@ class Settings {
     public static var SCREEN_HEIGHT = 720;
     public static var MS_PER_UPDATE = 75;
     public static var MS_DELAY_BEFORE_GAME = 1000; // Delay period before starting the game
-    public static var MS_DEALY_GAME_OVER = 3000; // How long to display the game over screen
+    public static var MS_DEALY_GAME_OVER = 5000; // How long to display the game over screen
 
     public static var Players = [
 

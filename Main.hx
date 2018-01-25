@@ -85,6 +85,7 @@ class Main {
             // In MS_DELAY_BETWEEN_GAMES run reset()
             haxe.Timer.delay(
                 function() {
+                    GameOver.clear();
                     reset();
                     delayBeforeGame();
                 }, Settings.MS_DEALY_GAME_OVER);

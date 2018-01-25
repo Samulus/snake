@@ -45,6 +45,10 @@ class Player {
     }
 
     public function getSnake(): Snake {
+        if (snake == null) {
+            trace("Missing Snake!");
+        }
+
         return snake;
     }
 
