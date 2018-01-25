@@ -17,13 +17,35 @@ class Main {
         // Setup Global Inputs
         GlobalKeyboardInput.init(Lib.current.stage);
         // GlobalMouseInput.init(Lib.current.stage);
-
-        // Setup WorldArray
         world = new WorldArray(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
-
-        // Spawn Apple
         apple = new Apple(world.getAvailableRandomSpawn());
-        world.add(apple.getPosition(), apple.getID());
+
+        // reset && render but don't update or accept input yet
+        reset();
+        delayBeforeGame();
+    }
+
+    static public function delayBeforeGame() {
+        // Wait Settings.MS_DELAY_BEFORE_GAME to start accepting input
+        // This is so the player can see where they are on screen prior to
+        // the game starting.
+        haxe.Timer.delay(
+            function() {
+                gameTimer = new haxe.Timer(Settings.MS_PER_UPDATE);
+                gameTimer.run = loop;
+            }, Settings.MS_DELAY_BEFORE_GAME);
+    }
+
+    static public function loop(): Void {
+        input();
+        update();
+        render();
+    }
+
+    static public function reset(): Void {
+        Snake.Reset();
+
+        world.reset();
 
         // Spawn Snakes for Players
         for (player in Settings.Players) {
@@ -37,25 +59,8 @@ class Main {
             world.add(spawn, snake.getID());
         }
 
-        // Render but don't go anywhere
-        render();
-
-        // Wait Settings.MS_DELAY to start accepting input
-        // This is so the player can see where they are on screen prior to
-        // the game starting.
-
-        haxe.Timer.delay(
-            function() {
-                // Start Player / Apple Update / Render Loops
-                gameTimer = new haxe.Timer(Settings.MS_PER_UPDATE);
-                gameTimer.run = loop;
-
-            }, Settings.MS_DELAY);
-    }
-
-    static public function loop(): Void {
-        input();
-        update();
+        var spawn = world.getAvailableRandomSpawn();
+        world.add(apple.getPosition(), apple.getID());
         render();
     }
 
@@ -70,6 +75,19 @@ class Main {
     static public function update(): Void {
         for (player in Settings.Players) {
             player.update(world, apple);
+        }
+
+        if (Snake.Count() <= 0) {
+            // Print out winners
+            gameTimer.stop();
+            GameOver.display(Settings.Players);
+
+            // In MS_DELAY_BETWEEN_GAMES run reset()
+            haxe.Timer.delay(
+                function() {
+                    reset();
+                    delayBeforeGame();
+                }, Settings.MS_DEALY_GAME_OVER);
         }
     }
 

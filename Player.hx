@@ -44,6 +44,10 @@ class Player {
         snake.render();
     }
 
+    public function getSnake(): Snake {
+        return snake;
+    }
+
     public function getName(): String {
         return this.name;
     }

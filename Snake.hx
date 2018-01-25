@@ -10,27 +10,35 @@ import flash.display.Shape;
 
 class Snake extends Entity {
 
-    private var positions: Array<Point>;
-    private var lastTail: Point;
+    private static var TOTAL_SNAKES = 0;
+
+    // Rendering Info
     private var blocks: Array<Shape>;
-    private var velocity: Point;
     private var w: Int;
     private var h: Int;
     private var color: UInt;
-    private var direction: Direction;
-    private var stage: Stage;
+
+    // Positional Information
+    private var positions: Array<Point>;
+    private var lastTail: Point;
+    private var velocity: Point;
+    private var direction: Direction; // Human readable velocity
 
     // Screen Info
     private var screenWidth: Int;
     private var screenHeight: Int;
+    private var stage: Stage;
 
     // States
     private var dead: Bool;
     private var ateApple: Bool;
+    private var score: UInt;
 
     public function new(x: Int, y: Int, w: Int, h: Int, color: UInt,
                         screenWidth: Int, screenHeight: Int) {
         super();
+
+        TOTAL_SNAKES++;
 
         // Setup positioning information
         this.positions = new Array<Point>();
@@ -41,6 +49,7 @@ class Snake extends Entity {
         this.h = h;
         this.color = color;
         this.stage = Lib.current.stage;
+        this.score = 0;
 
         // Setup actual blocks to be rendered
         this.blocks = new Array<Shape>();
@@ -172,7 +181,8 @@ class Snake extends Entity {
         */
 
         if (world.itemAt(this.getHead()) == apple.getID()) {
-            this.consumeApple();
+            this.ateApple = true;
+            this.score += 1;
             world.del(apple.getPosition());
             apple.setPosition(world.getAvailableRandomSpawn());
             world.add(apple.getPosition(), apple.getID());
@@ -201,21 +211,30 @@ class Snake extends Entity {
 
     public function die(world: World) {
         dead = true;
+        TOTAL_SNAKES--;
         for (i in 0 ... this.positions.length) {
             world.del(this.positions[i]);
             this.stage.removeChild(this.blocks[i]);
         }
     }
 
-    public function consumeApple() {
-        this.ateApple = true;
-    }
-
-    public function getPositions() {
-        return this.positions;
+    public function getScore(): UInt {
+        return this.score;
     }
 
     public function getHead(): Point {
         return this.positions[0];
+    }
+
+    /*
+        Static Methods
+    */
+
+    public static function Count() {
+        return TOTAL_SNAKES;
+    }
+
+    public static function Reset() {
+        TOTAL_SNAKES = 0;
     }
 }
