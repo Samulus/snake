@@ -55,10 +55,6 @@ class Snake extends Entity {
     }
 
     public function move(desired: Direction) {
-        if (this.dead) {
-            return;
-        }
-
         // Change the player velocity if they're not trying to travel in an opposing
         // direction
         var okNorth = desired == Direction.North && direction != Direction.South;
