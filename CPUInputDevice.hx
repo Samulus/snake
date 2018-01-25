@@ -23,12 +23,15 @@ class CPUInputDevice implements InputDevice {
         var needGoEast = (head.x > food.x);
 
         // Correct Y direction if required
-        if ((head.x != food.x) && ((needGoEast && tmpDirection == Direction.West) || (!needGoEast && tmpDirection == Direction.East))) {
+        if ((head.x != food.x) &&
+           ((needGoEast && tmpDirection == Direction.West) ||
+           (!needGoEast && tmpDirection == Direction.East))) {
             direction = needGoNorth ? Direction.North : Direction.South;
         }
 
         // Correct X direction if required
-        if ((needGoNorth && tmpDirection == Direction.South) || (!needGoNorth && tmpDirection == Direction.North)) {
+        if ((needGoNorth && tmpDirection == Direction.South) ||
+           (!needGoNorth && tmpDirection == Direction.North)) {
             direction = needGoEast ? Direction.East : Direction.West;
         }
     }

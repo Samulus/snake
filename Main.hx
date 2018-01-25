@@ -26,7 +26,11 @@ class Main {
                           Settings.SNAKE_VELOCITIES);
 
         // Setup World + Singular Apple
-        world = new WorldArray(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
+        world = new WorldArray(Settings.SCREEN_WIDTH,
+                               Settings.SCREEN_HEIGHT,
+                               Settings.CELL_WIDTH,
+                               Settings.CELL_HEIGHT);
+
         apple = new Apple(world.getAvailableRandomSpawn());
 
         // Setup all initial object states + delay before starting main loop

@@ -6,7 +6,6 @@
 package ;
 
 class Player {
-
     private var name: String;
     private var color: UInt;
     private var inputDevice: InputDevice;

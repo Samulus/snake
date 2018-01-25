@@ -3,8 +3,9 @@
     Author: Samuel Vargas
 */
 
-class MouseInputDevice implements InputDevice {
+package ;
 
+class MouseInputDevice implements InputDevice {
     private var direction: Direction;
 
     public function new() {}
@@ -37,8 +38,6 @@ class MouseInputDevice implements InputDevice {
                 direction = Direction.West;
             }
         }
-
-
     }
 
     public function getDirection(): Direction {

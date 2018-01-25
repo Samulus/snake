@@ -1,6 +1,9 @@
 /*
     GetReady.hx
     Author: Samuel Vargas
+
+    Displays a message at the top left side of the screen with
+    a message informing the player that the game will start soon.
 */
 
 package ;

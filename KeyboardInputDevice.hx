@@ -3,6 +3,8 @@
     Author: Samuel Vargas
 */
 
+package ;
+
 class KeyboardInputDevice implements InputDevice {
 
     private var north: UInt;

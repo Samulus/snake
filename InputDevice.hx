@@ -2,6 +2,7 @@
     InputDevice.hx
     Author: Samuel Vargas
 */
+
 package ;
 
 interface InputDevice {

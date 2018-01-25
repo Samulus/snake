@@ -3,6 +3,8 @@
     Author: Samuel Vargas
 */
 
+package ;
+
 class SnakeManager {
     private static var SnakeCount = 0;
     private static var cellWidth: Int;

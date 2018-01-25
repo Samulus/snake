@@ -2,8 +2,11 @@
     GameOver.hx
     Author: Samuel Vargas
 
-    If multiple players have the same score print out each player.
+    Displays a message at the top left side of the screen with
+    the list of winners (ties are allowed!) at the end of the game.
 */
+
+package ;
 
 import flash.Lib;
 import flash.text.TextField;
@@ -39,11 +42,11 @@ class GameOver {
             return 0;
         });
 
-        var highestKey = tmp[0];
+        var max = tmp[0];
         messageField = new TextField();
-        messageField.text = "Game Over. High-Score: " + highestKey + " Apples Eaten. Winner(s): ";
+        messageField.text = "Hi-Score: " + max + " Apples. Winner(s): ";
         messageField.width = Settings.SCREEN_WIDTH;
-        for (name in scoreTable[highestKey]) {
+        for (name in scoreTable[max]) {
             messageField.text += name + " ";
         }
         messageField.text += " (Restarting in " + Settings.MS_DEALY_GAME_OVER + " ms).";

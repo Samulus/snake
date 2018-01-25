@@ -4,6 +4,7 @@
 */
 
 package ;
+
 import flash.ui.Keyboard;
 
 class Settings {
