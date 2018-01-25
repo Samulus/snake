@@ -1,11 +1,17 @@
 /*
     WorldArray.hx
     Author: Samuel Vargas
+
+    ID System:
+        > 0   .............. Snake ID
+        0     .............. Cell is Empty
+        < 0   .............. Apple
 */
+
 package ;
 
 class WorldArray implements World {
-    private var cells: Array<UInt>;
+    private var cells: Array<Int>;
     private var screenWidth: UInt;
     private var screenHeight: UInt;
     private var cellHeight: UInt;
@@ -19,7 +25,7 @@ class WorldArray implements World {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         this.numColumns = cast screenWidth / cellWidth;
-        cells = new Array<UInt>();
+        cells = new Array<Int>();
         reset();
     }
 
@@ -36,7 +42,7 @@ class WorldArray implements World {
         }
     }
 
-    public function add(p: Point, id: UInt): Void {
+    public function add(p: Point, id: Int): Void {
         cells[toIndex(p)] = id;
     }
 
