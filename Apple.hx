@@ -34,7 +34,7 @@ class Apple extends Entity {
 
     public function render() {
         shape.graphics.beginFill(0xFF0000);
-        shape.graphics.drawRect(0, 0, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
+        shape.graphics.drawEllipse(0, 0, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
         shape.x = position.x;
         shape.y = position.y;
     }
