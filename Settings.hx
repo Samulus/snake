@@ -30,6 +30,11 @@ class Settings {
         new Player(
             "Nick", 0x67F1FF,
             new MouseInputDevice()
+        ),
+
+        new Player(
+            "Robot", 0x000000,
+            new CPUInputDevice()
         )
 
     ];

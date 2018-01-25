@@ -67,7 +67,7 @@ class Main {
     static public function input(): Void {
         for (player in Settings.Players) {
             var input = player.getInputDevice();
-            input.update(player.getSnake());
+            input.update(player.getSnake(), apple);
             player.move(input.getDirection());
         }
     }

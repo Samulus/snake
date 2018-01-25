@@ -9,7 +9,7 @@ class MouseInputDevice implements InputDevice {
 
     public function new() {}
 
-    public function update(snake: Snake): Void {
+    public function update(snake: Snake, apple: Apple): Void {
         var clickPoint = GlobalMouseInput.getLastClickPoint();
         var pos = snake.getHead();
 
