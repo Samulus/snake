@@ -8,7 +8,7 @@ import flash.ui.Keyboard;
 
 class Settings {
     /* Visual */
-    public static var CELL_HEIGHT = 16; // Only works for 16?
+    public static var CELL_HEIGHT = 16;
     public static var CELL_WIDTH = 16;
     public static var SCREEN_WIDTH = 1280;
     public static var SCREEN_HEIGHT = 720;
