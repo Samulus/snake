@@ -4,7 +4,6 @@
 */
 
 package ;
-import flash.Lib;
 import flash.ui.Keyboard;
 
 class Settings {
@@ -13,6 +12,7 @@ class Settings {
     public static var SCREEN_WIDTH = 1280;
     public static var SCREEN_HEIGHT = 720;
     public static var MS_PER_UPDATE = 75;
+    public static var MS_DELAY = 1000; // Delay period before starting the game
 
     public static var Players = [
 

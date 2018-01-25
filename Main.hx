@@ -6,12 +6,12 @@
 package ;
 
 import flash.Lib;
-import flash.events.Event;
-import flash.ui.Keyboard;
 
 class Main {
+
     static private var apple: Apple;
     static private var world: World;
+    static private var gameTimer: haxe.Timer;
 
     static public function main() {
         // Setup Global Inputs
@@ -37,16 +37,29 @@ class Main {
             world.add(spawn, snake.getID());
         }
 
-        // Start Player Input Listening Loop
-        Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, input);
+        // Render but don't go anywhere
+        render();
 
-        // Start Player / Apple Update / Render Loops
-        var timer = new haxe.Timer(Settings.MS_PER_UPDATE);
-        timer.run = updateAndRender;
+        // Wait Settings.MS_DELAY to start accepting input
+        // This is so the player can see where they are on screen prior to
+        // the game starting.
+
+        haxe.Timer.delay(
+            function() {
+                // Start Player / Apple Update / Render Loops
+                gameTimer = new haxe.Timer(Settings.MS_PER_UPDATE);
+                gameTimer.run = loop;
+
+            }, Settings.MS_DELAY);
     }
 
-    // Listen for input every frame for each player
-    static public function input(event: Event): Void {
+    static public function loop(): Void {
+        input();
+        update();
+        render();
+    }
+
+    static public function input(): Void {
         for (player in Settings.Players) {
             var input = player.getInputDevice();
             input.update();
@@ -54,10 +67,14 @@ class Main {
         }
     }
 
-    // Update and move all the players every Settings.MS_PER_UPDATE
-    static public function updateAndRender(): Void {
+    static public function update(): Void {
         for (player in Settings.Players) {
             player.update(world, apple);
+        }
+    }
+
+    static public function render(): Void {
+        for (player in Settings.Players) {
             player.render();
         }
         apple.render();
