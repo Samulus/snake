@@ -23,8 +23,8 @@ class Settings {
     ];
 
     /* Timing */
-    public static var MS_DELAY_BEFORE_GAME = 1000; // Delay period before starting the game
-    public static var MS_DEALY_GAME_OVER = 5000; // How long to display the game over screen
+    public static var MS_DELAY_BEFORE_GAME = 3000; // Delay period before starting the game
+    public static var MS_DEALY_GAME_OVER = 9000; // How long to display the game over screen
 
     /* Players */
     public static var Players = [
