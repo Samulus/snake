@@ -42,7 +42,7 @@ class SnakeManager {
     public static function maybeKillSnake(snake: Snake, world: World) {
         var head = snake.getHead();
 
-        var outOfBounds = head.x < 0 || head.x > screenWidth || head.y < 0 || head.y > screenHeight;
+        var outOfBounds = head.x < 0 || head.x > screenWidth - cellWidth || head.y < 0 || head.y > screenHeight - cellHeight;
         var snakeCollision = world.itemAt(head) > 0;
 
         if (outOfBounds || snakeCollision) {
