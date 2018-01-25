@@ -50,7 +50,6 @@ class Player extends Entity {
     }
 
     public function move(desired: Direction) {
-
         if (dead) {
             return;
         }
@@ -80,20 +79,20 @@ class Player extends Entity {
         }
     }
 
-    public function update() {
-
+    public function update(world: World, apple: Apple) {
         if (dead) {
             return;
         }
 
+        /*
+            Grow Snake
+        */
+
         // Record the new free cell that moving the snake always produces
-        // TODO: I don't know if cloning objects is required using Haxe but
-        //       I'm doing it anyway to avoid any nasty reference related
-        //       bugs.
         lastTail = Point.clone(this.positions[this.positions.length - 1]);
 
         // Update the body of the snake.
-        var i=this.positions.length - 1;
+        var i = this.positions.length - 1;
         while (i > 0) {
             this.positions[i].x = this.positions[i - 1].x;
             this.positions[i].y = this.positions[i - 1].y;
@@ -104,21 +103,7 @@ class Player extends Entity {
         this.positions[0].x += this.velocity.x;
         this.positions[0].y += this.velocity.y;
 
-        /* Check if the snake is dead */
-
-        // 1) Snake has collided with itself (ignore the head)
-        /*
-        for (i in 1 ... this.positions.length) {
-            if (World.isSnakeHere(this.positions[i], this)) {
-                trace("SNAKE HAS DIED");
-                dead = true;
-                return;
-            }
-        }
-
-        // 2) TODO: Snake is out of bounds.
-
-        // Grow snake if needed
+        // Grow if we ate an apple
         if (this.ateApple) {
             this.positions.push(Point.clone(lastTail));
             this.blocks.push(new Shape());
@@ -126,11 +111,39 @@ class Player extends Entity {
             this.ateApple = false;
         }
 
-        // Record in the map where the head is, mark lastTail as available
-        //World.markAvailable(Point.clone(lastTail));
-        //World.markOccupied(Point.clone(this.positions[0]), this);
+        /*
+            Kill Snake
         */
 
+        // (TODO): Suicide if Snake has gone out of bounds
+
+        // Suicide if we touch another snake (ourselves included!)
+        if (world.itemAt(this.positions[i]) > 0) {
+            // If the ID is this.getID() it was a self collision
+            // Otherwise its a collision with another snake
+            // This info is useful for scoring (i.e you get points when
+            // some runs into you)
+            die(world);
+            return;
+        }
+
+        /*
+            Eat Apples
+        */
+
+        if (world.itemAt(this.getHead()) == apple.getID()) {
+            this.consumeApple();
+            world.del(apple.getPosition());
+            apple.setPosition(world.getAvailableRandomSpawn());
+            world.add(apple.getPosition(), apple.getID());
+        }
+
+        /*
+            Update World
+        */
+
+        world.add(this.getHead(), this.getID());
+        world.del(lastTail);
     }
 
     public function render() {
@@ -146,6 +159,14 @@ class Player extends Entity {
         }
     }
 
+    public function die(world: World) {
+        dead = true;
+        for (i in 0 ... this.positions.length) {
+            world.del(this.positions[i]);
+            this.stage.removeChild(this.blocks[i]);
+        }
+    }
+
     public function consumeApple() {
         this.ateApple = true;
     }
@@ -156,9 +177,5 @@ class Player extends Entity {
 
     public function getHead(): Point {
         return this.positions[0];
-    }
-
-    public function getLastTail(): Point {
-        return this.lastTail;
     }
 }
