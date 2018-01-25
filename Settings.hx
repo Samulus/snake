@@ -10,9 +10,9 @@ import flash.ui.Keyboard;
 class Settings {
     public static var CELL_HEIGHT = 16; // Only works for 16?
     public static var CELL_WIDTH = 16;
-    public static var SCREEN_WIDTH = 400;
-    public static var SCREEN_HEIGHT = 300;
-    public static var MS_PER_UPDATE = 100;
+    public static var SCREEN_WIDTH = 1280;
+    public static var SCREEN_HEIGHT = 720;
+    public static var MS_PER_UPDATE = 75;
 
     public static var Players = [
 

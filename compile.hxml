@@ -1,4 +1,4 @@
 -swf Snake.swf
 -swf-version 10.1
--swf-header 400:300:60:FFFFFFFF
+-swf-header 1280:720:60:FFFFFFFF
 -main Main
