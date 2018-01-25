@@ -34,6 +34,7 @@ class Main {
         delayBeforeGame();
     }
 
+    // Reset the entire state of the game
     static public function reset(): Void {
         SnakeManager.reset();
         world.reset();
@@ -56,8 +57,10 @@ class Main {
         // Wait Settings.MS_DELAY_BEFORE_GAME to start accepting input
         // This is so the player can see where they are on screen prior to
         // the game starting.
+        GetReady.display();
         haxe.Timer.delay(
             function() {
+                GetReady.clear();
                 gameTimer = new haxe.Timer(Settings.MS_PER_UPDATE);
                 gameTimer.run = loop;
             }, Settings.MS_DELAY_BEFORE_GAME);
@@ -96,12 +99,13 @@ class Main {
             SnakeManager.updateWorld(snake, world);
         }
 
+        // Game ends when all the snakes die.
         if (SnakeManager.getCount() <= 0) {
             // Print out winners
             gameTimer.stop();
             GameOver.display(Settings.Players);
 
-            // In MS_DELAY_BETWEEN_GAMES run reset()
+            // After MS_DELAY_BETWEEN_GAMES elapses, restart the game.
             haxe.Timer.delay(
                 function() {
                     GameOver.clear();
@@ -111,6 +115,7 @@ class Main {
         }
     }
 
+    // Render everything!
     static public function render(): Void {
         for (player in Settings.Players) {
             var snake = player.getSnake();
