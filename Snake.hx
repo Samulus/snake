@@ -55,19 +55,8 @@ class Snake {
     }
 
     static public function updateAndRender(): Void {
-        // Update and render the player
-        player.update();
+        player.update(world, apple);
         player.render();
-
-
-        // Check if the player has collided with an Apple
-        if (world.itemAt(player.getHead()) == apple.getID()) {
-            player.consumeApple();
-            world.del(apple.getPosition());
-            apple.setPosition(world.getAvailableRandomSpawn());
-            world.add(apple.getPosition(), apple.getID());
-        }
-
         apple.render();
     }
 }
