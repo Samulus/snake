@@ -18,7 +18,7 @@ class KeyboardInputDevice implements InputDevice {
         this.east = east;
     }
 
-    public function update() {
+    public function update(snake: Snake) {
         if (GlobalKeyboardInput.isPressed(north)) {
             direction = Direction.North;
         }

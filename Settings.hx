@@ -25,14 +25,12 @@ class Settings {
         new Player(
             "Alice", 0x0000FF,
             new KeyboardInputDevice(Keyboard.UP, Keyboard.DOWN, Keyboard.LEFT, Keyboard.RIGHT)
-        )
+        ),
 
-/*
         new Player(
-            "Alice", 0x0000FF,
-            new MouseInputDevice(),
+            "Nick", 0x67F1FF,
+            new MouseInputDevice()
         )
-        */
 
     ];
 }

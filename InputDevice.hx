@@ -5,6 +5,6 @@
 package ;
 
 interface InputDevice {
-    public function update(): Void;
+    public function update(snake: Snake): Void;
     public function getDirection(): Direction;
 }

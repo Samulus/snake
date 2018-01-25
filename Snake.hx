@@ -226,6 +226,10 @@ class Snake extends Entity {
         return this.positions[0];
     }
 
+    public function getDirection(): Direction {
+        return this.direction;
+    }
+
     /*
         Static Methods
     */

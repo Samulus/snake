@@ -16,7 +16,7 @@ class Main {
     static public function main() {
         // Setup Global Inputs
         GlobalKeyboardInput.init(Lib.current.stage);
-        // GlobalMouseInput.init(Lib.current.stage);
+        GlobalMouseInput.init(Lib.current.stage);
         world = new WorldArray(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, Settings.CELL_WIDTH, Settings.CELL_HEIGHT);
         apple = new Apple(world.getAvailableRandomSpawn());
 
@@ -67,7 +67,7 @@ class Main {
     static public function input(): Void {
         for (player in Settings.Players) {
             var input = player.getInputDevice();
-            input.update();
+            input.update(player.getSnake());
             player.move(input.getDirection());
         }
     }
