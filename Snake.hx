@@ -16,6 +16,7 @@ class Snake extends Entity {
     private var velocity: Point;
     private var w: Int;
     private var h: Int;
+    private var color: UInt;
     private var direction: Direction;
     private var stage: Stage;
 
@@ -27,8 +28,8 @@ class Snake extends Entity {
     private var dead: Bool;
     private var ateApple: Bool;
 
-    public function new(x: Int, y: Int, w: Int, h: Int,
-                        screenWidth: Int, screenHeight: Int, stage: Stage) {
+    public function new(x: Int, y: Int, w: Int, h: Int, color: UInt,
+                        screenWidth: Int, screenHeight: Int) {
         super();
 
         // Setup positioning information
@@ -38,7 +39,8 @@ class Snake extends Entity {
         this.lastTail = new Point(x, y);
         this.w = w;
         this.h = h;
-        this.stage = stage;
+        this.color = color;
+        this.stage = Lib.current.stage;
 
         // Setup actual blocks to be rendered
         this.blocks = new Array<Shape>();
@@ -166,7 +168,7 @@ class Snake extends Entity {
         }
 
         for (i in 0 ... this.blocks.length) {
-            this.blocks[i].graphics.beginFill(0x333333);
+            this.blocks[i].graphics.beginFill(this.color);
             this.blocks[i].graphics.drawRect(0, 0, this.w, this.h);
             this.blocks[i].x = this.positions[i].x;
             this.blocks[i].y = this.positions[i].y;
