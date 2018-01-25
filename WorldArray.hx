@@ -25,12 +25,11 @@ class WorldArray implements World {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         this.numColumns = cast screenWidth / cellWidth;
-        cells = new Array<Int>();
         reset();
     }
 
     public function reset(): Void {
-        cells.splice(0, cells.length);
+        cells = new Array<Int>(); // TODO: GC in Haxe?
         var y: UInt = 0;
         while (y < screenHeight) {
             var x: UInt = 0;
