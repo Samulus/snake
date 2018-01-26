@@ -31,22 +31,17 @@ class Settings {
     public static var Players = [
 
         new Player(
-            "Sam", 0x00FF00,
+            "Green", 0x00FF00,
             new KeyboardInputDevice(Keyboard.W, Keyboard.S, Keyboard.A, Keyboard.D)
         ),
 
         new Player(
-            "Alice", 0x0000FF,
-            new KeyboardInputDevice(Keyboard.UP, Keyboard.DOWN, Keyboard.LEFT, Keyboard.RIGHT)
-        ),
-
-        new Player(
-            "Nick", 0x67F1FF,
+            "Cyan", 0x67F1FF,
             new MouseInputDevice()
         ),
 
         new Player(
-            "Robot", 0x000000,
+            "Black", 0x000000,
             new CPUInputDevice()
         )
 
