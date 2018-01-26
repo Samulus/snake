@@ -20,7 +20,7 @@ class KeyboardInputDevice implements InputDevice {
         this.east = east;
     }
 
-    public function update(snake: Snake, apple: Apple) {
+    public function getDirection(snake: Snake, apple: Apple): Direction {
         if (GlobalKeyboardInput.isPressed(north)) {
             direction = Direction.North;
         }
@@ -36,9 +36,8 @@ class KeyboardInputDevice implements InputDevice {
         else if (GlobalKeyboardInput.isPressed(west)) {
             direction = Direction.West;
         }
-    }
 
-    public function getDirection() {
         return direction;
     }
+
 }

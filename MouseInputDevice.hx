@@ -10,12 +10,13 @@ class MouseInputDevice implements InputDevice {
 
     public function new() {}
 
-    public function update(snake: Snake, apple: Apple): Void {
+    public function getDirection(snake: Snake, apple: Apple): Direction {
         var clickPoint = GlobalMouseInput.getLastClickPoint();
         var pos = snake.getHead();
 
+        // Continue in the same direction if nothing clicked
         if (clickPoint == null) {
-            return;
+            return snake.getDirection();
         }
 
         var tmpDirection = snake.getDirection();
@@ -38,10 +39,7 @@ class MouseInputDevice implements InputDevice {
                 direction = Direction.West;
             }
         }
-    }
 
-    public function getDirection(): Direction {
         return direction;
     }
-
 }

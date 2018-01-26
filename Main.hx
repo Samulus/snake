@@ -81,8 +81,8 @@ class Main {
         for (player in Settings.Players) {
             var input = player.getInputDevice();
             var snake = player.getSnake();
-            input.update(snake, apple);
-            snake.move(input.getDirection());
+            var direction = input.getDirection(snake, apple);
+            snake.move(direction);
         }
     }
 

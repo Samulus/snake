@@ -15,7 +15,7 @@ class CPUInputDevice implements InputDevice {
 
     public function new() {}
 
-    public function update(snake: Snake, apple: Apple) {
+    public function getDirection(snake: Snake, apple: Apple): Direction {
         var head = snake.getHead();
         var food = apple.getPosition();
         var tmpDirection = snake.getDirection();
@@ -34,9 +34,7 @@ class CPUInputDevice implements InputDevice {
            (!needGoNorth && tmpDirection == Direction.North)) {
             direction = needGoEast ? Direction.East : Direction.West;
         }
-    }
 
-    public function getDirection() {
         return direction;
     }
 }
