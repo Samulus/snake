@@ -8,7 +8,7 @@ package ;
 import flash.Lib;
 import flash.display.Shape;
 
-class Snake extends Entity {
+class Snake {
 
     // Positional Information
     private var positions: Array<Point>;
@@ -30,7 +30,6 @@ class Snake extends Entity {
     public function new(head: Point, direction: Direction,
                         velocityMap: Map<Direction, Point>,
                         color: UInt, cellWidth: UInt, cellHeight: UInt) {
-        super();
 
         // Setup positioning information
         this.positions = [Point.clone(head)];

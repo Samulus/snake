@@ -35,7 +35,7 @@ class SnakeManager {
     public static function spawnSnake(p: Point, color: UInt, world: World): Snake {
         SnakeCount++;
         var tmp = new Snake(p, getSafestDirection(p), velocityMap, color, cellWidth, cellHeight);
-        world.add(p, tmp.getID());
+        world.add(p, CellType.Snake);
         return tmp;
     }
 
@@ -43,7 +43,7 @@ class SnakeManager {
         var head = snake.getHead();
 
         var outOfBounds = head.x < 0 || head.x > screenWidth - cellWidth || head.y < 0 || head.y > screenHeight - cellHeight;
-        var snakeCollision = world.itemAt(head) > 0;
+        var snakeCollision = world.itemAt(head) == CellType.Snake;
 
         if (outOfBounds || snakeCollision) {
             SnakeCount--;
@@ -55,11 +55,11 @@ class SnakeManager {
     }
 
     public static function maybeEatApple(snake: Snake, apple: Apple, world: World): Bool {
-        if (world.itemAt(snake.getHead()) == apple.getID()) {
+        if (world.itemAt(snake.getHead()) == CellType.Apple) {
             snake.consumeApple();
             world.del(apple.getPosition());
             apple.setPosition(world.getAvailableRandomSpawn());
-            world.add(apple.getPosition(), apple.getID());
+            world.add(apple.getPosition(), CellType.Apple);
             return true;
         }
 
@@ -67,7 +67,7 @@ class SnakeManager {
     }
 
     public static function updateWorld(snake: Snake, world: World) {
-        world.add(snake.getHead(), snake.getID());
+        world.add(snake.getHead(), CellType.Snake);
         world.del(snake.getLastTail());
     }
 

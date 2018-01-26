@@ -8,16 +8,14 @@ package ;
 import flash.Lib;
 import flash.display.Shape;
 
-class Apple extends Entity {
+class Apple {
     private var position: Point;
     private var shape: Shape;
 
     public function new(point: Point) {
-        super();
         shape = new Shape();
         this.position = point;
         Lib.current.stage.addChild(shape);
-        this.id = -1;
     }
 
     public function getPosition(): Point {

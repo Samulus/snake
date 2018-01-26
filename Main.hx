@@ -53,7 +53,7 @@ class Main {
 
         // Place the apple in a random location
         apple.setPosition(world.getAvailableRandomSpawn());
-        world.add(apple.getPosition(), apple.getID());
+        world.add(apple.getPosition(), CellType.Apple);
         render();
     }
 
