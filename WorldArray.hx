@@ -71,7 +71,7 @@ class WorldArray implements World {
             if (cells[rwalk] == CellType.Empty) {
                 return fromIndex(rwalk);
             }
-            rwalk--;
+            rwalk++;
         }
 
         trace("Board is filled! Game should end");
